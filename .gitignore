@@ -1,17 +1,39 @@
+# Carpeta de salida de compilación
+bin/
+obj/
 
-.vs/SistemaGestionEmpleados/DesignTimeBuild/.dtbcache.v2
-*.v2
-*.v2
-.vs/SistemaGestionEmpleados/DesignTimeBuild/.dtbcache.v2
-*.dll
-BDOO/bin/Debug/net8.0/BDOO.dll
-SistemaGestionEmpleados/obj/Debug/net8.0/staticwebassets.development.json
-*.json
-*.v2
-*.exe
-*.exe
-*.css
-*.cache
-*.json
-*.props
-*.json
+# Archivos de usuario específicos de Visual Studio
+*.suo
+*.user
+*.sln.docstates
+
+# Dependencias de NuGet
+*.nuget.props
+*.paket.restore
+packages/
+
+# Archivos de configuración local
+*.vscode/
+.vs/
+
+# Archivos de configuración específicos del proyecto
+*.csproj.user
+*.userprefs
+*.lock.json
+
+# Archivos de registro y errores
+*.log
+*.errors
+
+# Archivos temporales y cachés
+*~
+*.swp
+
+# Archivos sensibles o locales
+.env
+.env.*
+
+# Otros archivos generados automáticamente
+_ReSharper*/
+*.backup
+*.bak

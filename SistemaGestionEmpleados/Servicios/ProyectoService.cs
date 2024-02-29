@@ -29,14 +29,14 @@ namespace SistemaGestionEmpleados.Servicios
             return newProyecto;
         }
 
-        public async Task UpdateProyecto(int id, Proyecto c)
+        public async Task UpdateProyecto(int id, Proyecto proyecto)
         {
             var existProyecto = await GetProyecto(id);
 
             if (existProyecto != null)
             {
-                existProyecto.NombreProyecto = existProyecto.NombreProyecto;
-                existProyecto.DescripcionProyecto = existProyecto.DescripcionProyecto;
+                existProyecto.NombreProyecto = proyecto.NombreProyecto;
+                existProyecto.DescripcionProyecto = proyecto.DescripcionProyecto;
                 await _context.SaveChangesAsync();
             }
         }
