@@ -18,12 +18,13 @@ builder.Services.AddDbContext<BDContext>(options =>
 
 var app = builder.Build();
 
+/*
 // CONFIGURACION DE LAS MIGRACIONES
 using (var scope = app.Services.CreateScope())
 {
     var dataContext = scope.ServiceProvider.GetRequiredService<BDContext>();
     dataContext.Database.Migrate();
-}
+}*/
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

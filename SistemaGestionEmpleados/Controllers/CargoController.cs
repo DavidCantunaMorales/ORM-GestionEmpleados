@@ -44,7 +44,7 @@ namespace SistemaGestionEmpleados.Controllers
         }
 
         // ACTUALIZAR UN CARGO
-        [HttpPut("updateClient/{id}")]
+        [HttpPut("updateCargo/{id}")]
         public async Task<ActionResult> Update(int id, Cargo cargo)
         {
             // VERIFICAR EL ID DE LA URL CON EL ID DEL JSON
@@ -68,7 +68,7 @@ namespace SistemaGestionEmpleados.Controllers
         }
 
         // ELIMINAR UN CARGO
-        [HttpDelete("deleteClient/{id}")]
+        [HttpDelete("deleteCargo/{id}")]
         public async Task<ActionResult> Delete(int id)
         {
             var cargoDelete = await _context.Cargos.FindAsync(id);
