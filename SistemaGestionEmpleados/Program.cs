@@ -1,5 +1,6 @@
 using BDOO;
 using Microsoft.EntityFrameworkCore;
+using SistemaGestionEmpleados.Servicios;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,20 +12,23 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // CONECCION A LA BASE DE DATOS
-builder.Services.AddDbContext<BDContext>(options =>
-{
+builder.Services.AddDbContext<BDContext>(options => {
     options.UseSqlServer(builder.Configuration.GetConnectionString("BarConnection"));
 });
+
+// INYECCION DE DEPENDENCIAS DE LOS SERVICIOS
+builder.Services.AddScoped<CargoService>();
+
 
 var app = builder.Build();
 
 /*
 // CONFIGURACION DE LAS MIGRACIONES
-using (var scope = app.Services.CreateScope())
-{
+using (var scope = app.Services.CreateScope()) {
     var dataContext = scope.ServiceProvider.GetRequiredService<BDContext>();
     dataContext.Database.Migrate();
-}*/
+}
+*/
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
