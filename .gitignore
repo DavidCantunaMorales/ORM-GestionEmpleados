@@ -7,3 +7,11 @@
 BDOO/bin/Debug/net8.0/BDOO.dll
 SistemaGestionEmpleados/obj/Debug/net8.0/staticwebassets.development.json
 *.json
+*.v2
+*.exe
+*.exe
+*.css
+*.cache
+*.json
+*.props
+*.json
