@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using SistemaGestionEmpleados.Servicios;
 
 namespace SistemaGestionEmpleados.Controllers
 {
@@ -9,25 +10,25 @@ namespace SistemaGestionEmpleados.Controllers
     [ApiController]
     public class DepartamentoController : ControllerBase
     {
-        private BDContext _context;
+        private readonly DepartamentoService _departamentoService;
 
-        public DepartamentoController(BDContext context)
+        public DepartamentoController(DepartamentoService departamentoService)
         {
-            _context = context;
+            _departamentoService = departamentoService;
         }
 
         // OBTENER TODOS LOS DEPARTAMENTOS
         [HttpGet]
         public async Task<IEnumerable<Departamento>> GetAll()
         {
-            return await _context.Departamentos.ToListAsync();
+            return await _departamentoService.GetDepartamentos();
         }
 
         // OBTENER UN DEPARTAMENTO
         [HttpGet("getDepartamento/{id}")]
         public async Task<ActionResult<Departamento>> GetById(int id)
         {
-            var departamento = await _context.Departamentos.FindAsync(id);
+            var departamento = await _departamentoService.GetDepartamento(id);
             if (departamento is null)
             {
                 return AccountNotFound(id);
@@ -37,16 +38,15 @@ namespace SistemaGestionEmpleados.Controllers
 
         // CREAR UN NUEVO DEPARTAMENTO
         [HttpPost("addDepartamento")]
-        public async Task<ActionResult<Departamento>> Create(Departamento departamento)
+        public async Task<IActionResult> Create(Departamento departamento)
         {
-            _context.Departamentos.Add(departamento);
-            var newDepartamento = await _context.SaveChangesAsync();
+            var newDepartamento = await _departamentoService.CreateDepartamento(departamento);
             return CreatedAtAction(nameof(GetById), new { id = departamento.IdDep }, departamento);
         }
 
         // ACTUALIZAR UN DEPARTAMENTO
         [HttpPut("updateDepartamento/{id}")]
-        public async Task<ActionResult> Update(int id, Departamento departamento)
+        public async Task<IActionResult> Update(int id, Departamento departamento)
         {
             // VERIFICAR EL ID DE LA URL CON EL ID DEL JSON
             if (id != departamento.IdDep)
@@ -55,36 +55,29 @@ namespace SistemaGestionEmpleados.Controllers
             }
 
             // ENCONTRANDO EL DEPARTAMENTO A ACTUALIZAR
-            var departamentoUpdate = await _context.Departamentos.FindAsync(id);
+            var departamentoUpdate = await _departamentoService.GetDepartamento(id);
 
             // VERIFICAR SI SE ENCUENTRA EL DEPARTAMENTO
-            if (departamentoUpdate is not null)
-            {
-                departamentoUpdate.NombreDep = departamento.NombreDep;
-                departamentoUpdate.DescripcionDep = departamento.DescripcionDep;
-                await _context.SaveChangesAsync();
+            if (departamentoUpdate is not null) {
+                await _departamentoService.UpdateDepartamento(id, departamento);
                 return Ok();
             }
-            else
-            {
+            else {
                 return AccountNotFound(id);
             }
         }
 
         // ELIMINAR UN DEPARTAMENTO
         [HttpDelete("deleteDepartamento/{id}")]
-        public async Task<ActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var departamentoDelete = await _context.Departamentos.FindAsync(id);
+            var departamentoDelete = await _departamentoService.GetDepartamento(id);
 
-            if (departamentoDelete is not null)
-            {
-                _context.Departamentos.Remove(departamentoDelete);
-                await _context.SaveChangesAsync();
+            if (departamentoDelete is not null) {
+                await _departamentoService.DeleteDepartamento(id);
                 return Ok();
             }
-            else
-            {
+            else {
                 return AccountNotFound(id);
             }
         }

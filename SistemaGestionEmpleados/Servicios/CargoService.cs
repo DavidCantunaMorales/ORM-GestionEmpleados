@@ -43,6 +43,7 @@ namespace SistemaGestionEmpleados.Servicios
         public async Task DeleteCargo(int id)
         {
             var cargoDelete = await GetCargo(id);
+
             if (cargoDelete != null) {
                 _context.Cargos.Remove(cargoDelete);
                 await _context.SaveChangesAsync();
