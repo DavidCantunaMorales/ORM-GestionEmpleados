@@ -13,7 +13,7 @@ namespace BDOO
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int IdHorario { get; set; }
-        public TimeOnly HoraEntrada { get; set; }
-        public TimeOnly HoraSalida { get; set; }
+        public string? HoraEntrada { get; set; }
+        public string? HoraSalida { get; set; }
     }
 }

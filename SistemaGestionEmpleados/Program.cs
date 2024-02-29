@@ -19,16 +19,18 @@ builder.Services.AddDbContext<BDContext>(options => {
 // INYECCION DE DEPENDENCIAS DE LOS SERVICIOS
 builder.Services.AddScoped<CargoService>();
 builder.Services.AddScoped<DepartamentoService>();
+builder.Services.AddScoped<ProyectoService>();
+builder.Services.AddScoped<EmpleadoService>();
 
 var app = builder.Build();
 
-/*
+
 // CONFIGURACION DE LAS MIGRACIONES
 using (var scope = app.Services.CreateScope()) {
     var dataContext = scope.ServiceProvider.GetRequiredService<BDContext>();
     dataContext.Database.Migrate();
 }
-*/
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

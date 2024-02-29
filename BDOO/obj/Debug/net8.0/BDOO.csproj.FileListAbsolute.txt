@@ -12,3 +12,4 @@ C:\Users\Vivobook Oled\Desktop\Universidad\Quinto Semestre\Base de Datos Avanzad
 C:\Users\Vivobook Oled\Desktop\Universidad\Quinto Semestre\Base de Datos Avanzada\Tercer Parcial\SistemaGestionEmpleados\BDOO\obj\Debug\net8.0\BDOO.pdb
 C:\Users\Vivobook Oled\Desktop\Universidad\Quinto Semestre\Base de Datos Avanzada\Tercer Parcial\SistemaGestionEmpleados\BDOO\obj\Debug\net8.0\BDOO.genruntimeconfig.cache
 C:\Users\Vivobook Oled\Desktop\Universidad\Quinto Semestre\Base de Datos Avanzada\Tercer Parcial\SistemaGestionEmpleados\BDOO\obj\Debug\net8.0\ref\BDOO.dll
+C:\Users\Vivobook Oled\Desktop\Universidad\Quinto Semestre\Base de Datos Avanzada\Tercer Parcial\SistemaGestionEmpleados\BDOO\obj\Debug\net8.0\BDOO.sourcelink.json
