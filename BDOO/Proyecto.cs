@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.Json.Serialization;
 
 namespace BDOO
 {
@@ -19,6 +20,7 @@ namespace BDOO
         public string? FechaFin { get; set; }
 
         // RELACION DE MUCHOS A MUCHOS
-        public virtual ICollection<ProyectoEmpleado> ProyectoEmpleados { get; set; }
+        [JsonIgnore]
+        public virtual ICollection<ProyectoEmpleado>? ProyectoEmpleados { get; set; }
     }
 }

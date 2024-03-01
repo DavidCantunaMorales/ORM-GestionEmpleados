@@ -1,30 +1,15 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace BDOO.Migrations
 {
     /// <inheritdoc />
-    public partial class InitDB : Migration
+    public partial class InitDb : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "Cargo",
-                columns: table => new
-                {
-                    IdCargo = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    NombreCargo = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DescripcionCargo = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Cargo", x => x.IdCargo);
-                });
-
             migrationBuilder.CreateTable(
                 name: "Departamento",
                 columns: table => new
@@ -45,8 +30,8 @@ namespace BDOO.Migrations
                 {
                     IdHorario = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    HoraEntrada = table.Column<TimeOnly>(type: "time", nullable: false),
-                    HoraSalida = table.Column<TimeOnly>(type: "time", nullable: false)
+                    HoraEntrada = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    HoraSalida = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -61,8 +46,8 @@ namespace BDOO.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     NombreProyecto = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DescripcionProyecto = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    FechaInicio = table.Column<DateOnly>(type: "date", nullable: false),
-                    FechaFin = table.Column<DateOnly>(type: "date", nullable: false)
+                    FechaInicio = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FechaFin = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -75,24 +60,17 @@ namespace BDOO.Migrations
                 {
                     IdEmp = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    NombreEmp = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ApellidoEmp = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DireccionEmp = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    TelefonoEmp = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CorreoEmp = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IdCargo = table.Column<int>(type: "int", nullable: false),
                     IdDep = table.Column<int>(type: "int", nullable: false),
-                    IdHorario = table.Column<int>(type: "int", nullable: false)
+                    IdHorario = table.Column<int>(type: "int", nullable: false),
+                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Apellido = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Direccion = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Telefono = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Correo = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Empleado", x => x.IdEmp);
-                    table.ForeignKey(
-                        name: "FK_Empleado_Cargo_IdCargo",
-                        column: x => x.IdCargo,
-                        principalTable: "Cargo",
-                        principalColumn: "IdCargo",
-                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Empleado_Departamento_IdDep",
                         column: x => x.IdDep,
@@ -108,17 +86,55 @@ namespace BDOO.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProyectoEmpleado",
+                name: "Supervisor",
                 columns: table => new
                 {
-                    IdEmpleado = table.Column<int>(type: "int", nullable: false),
+                    IdSup = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    IdDep = table.Column<int>(type: "int", nullable: false),
+                    IdHorario = table.Column<int>(type: "int", nullable: false),
                     IdProyecto = table.Column<int>(type: "int", nullable: false),
-                    IdProyectoEmp = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1")
+                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Apellido = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Direccion = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Telefono = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Correo = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProyectoEmpleado", x => new { x.IdEmpleado, x.IdProyecto });
+                    table.PrimaryKey("PK_Supervisor", x => x.IdSup);
+                    table.ForeignKey(
+                        name: "FK_Supervisor_Departamento_IdDep",
+                        column: x => x.IdDep,
+                        principalTable: "Departamento",
+                        principalColumn: "IdDep",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Supervisor_Horario_IdHorario",
+                        column: x => x.IdHorario,
+                        principalTable: "Horario",
+                        principalColumn: "IdHorario",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Supervisor_Proyecto_IdProyecto",
+                        column: x => x.IdProyecto,
+                        principalTable: "Proyecto",
+                        principalColumn: "IdProyecto",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ProyectoEmpleado",
+                columns: table => new
+                {
+                    IdProyectoEmp = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    IdEmpleado = table.Column<int>(type: "int", nullable: false),
+                    IdProyecto = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProyectoEmpleado", x => x.IdProyectoEmp);
                     table.ForeignKey(
                         name: "FK_ProyectoEmpleado_Empleado_IdEmpleado",
                         column: x => x.IdEmpleado,
@@ -134,11 +150,6 @@ namespace BDOO.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Empleado_IdCargo",
-                table: "Empleado",
-                column: "IdCargo");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Empleado_IdDep",
                 table: "Empleado",
                 column: "IdDep");
@@ -149,8 +160,28 @@ namespace BDOO.Migrations
                 column: "IdHorario");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ProyectoEmpleado_IdEmpleado",
+                table: "ProyectoEmpleado",
+                column: "IdEmpleado");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ProyectoEmpleado_IdProyecto",
                 table: "ProyectoEmpleado",
+                column: "IdProyecto");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Supervisor_IdDep",
+                table: "Supervisor",
+                column: "IdDep");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Supervisor_IdHorario",
+                table: "Supervisor",
+                column: "IdHorario");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Supervisor_IdProyecto",
+                table: "Supervisor",
                 column: "IdProyecto");
         }
 
@@ -161,13 +192,13 @@ namespace BDOO.Migrations
                 name: "ProyectoEmpleado");
 
             migrationBuilder.DropTable(
+                name: "Supervisor");
+
+            migrationBuilder.DropTable(
                 name: "Empleado");
 
             migrationBuilder.DropTable(
                 name: "Proyecto");
-
-            migrationBuilder.DropTable(
-                name: "Cargo");
 
             migrationBuilder.DropTable(
                 name: "Departamento");

@@ -24,23 +24,24 @@ namespace SistemaGestionEmpleados.Controllers
         }
 
         // OBTENER UN PROYECTO EMPLEADO
-        [HttpGet("getProyecto/{id}")]
-        public async Task<ActionResult<ProyectoEmpleado>> GetById(int id)
+        [HttpGet("getProyectoEmpleado/{idProyectoEmp}")]
+        public async Task<ActionResult<ProyectoEmpleado>> GetById(int idProyectoEmp)
         {
-            var proyecto = await _proyectoEmpleadoService.GetProyectoEmpleado(id);
-            if (proyecto is null)
+            var proyectoEmpleado = await _proyectoEmpleadoService.GetProyectoEmpleado(idProyectoEmp);
+            if (proyectoEmpleado is null)
             {
-                return AccountNotFound(id);
+                return AccountNotFound(idProyectoEmp);
             }
-            return proyecto;
+            return proyectoEmpleado;
         }
+
 
         // CREAR UN NUEVO PROYECTO EMPLEADO
         [HttpPost("addProyecto")]
         public async Task<IActionResult> Create(ProyectoEmpleado proyectoEmpleado)
         {
             var newProyectoEmpleado = await _proyectoEmpleadoService.CreateProyecto(proyectoEmpleado);
-            return CreatedAtAction(nameof(GetById), new { id = proyectoEmpleado.IdProyectoEmp }, proyectoEmpleado);
+            return CreatedAtAction(nameof(GetById), new { idProyectoEmp = newProyectoEmpleado.IdProyectoEmp }, newProyectoEmpleado);
         }
 
         // ACTUALIZAR UN PROYECTO EMPLEADO
@@ -69,7 +70,7 @@ namespace SistemaGestionEmpleados.Controllers
         }
 
         // ELIMINAR UN PROYECTO EMPLEADO
-        [HttpDelete("deleteDepartamento/{id}")]
+        [HttpDelete("deleteProyectoEmpleado/{id}")]
         public async Task<IActionResult> Delete(int id)
         {
             var proyectoEmpleadoDelete = await _proyectoEmpleadoService.GetProyectoEmpleado(id);

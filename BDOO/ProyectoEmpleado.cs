@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.Json.Serialization;
 
 namespace BDOO
 {
@@ -16,9 +17,11 @@ namespace BDOO
 
         // CLASE QUE PARTE LA RELACION DE MUCHOS A MUCHOS
         public int IdEmpleado { get; set; }
-        public virtual Empleado Empleado { get; set; }
+        [JsonIgnore]
+        public virtual Empleado? Empleado { get; set; }
 
         public int IdProyecto { get; set; }
-        public virtual Proyecto Proyecto { get; set; }
+        [JsonIgnore]
+        public virtual Proyecto? Proyecto { get; set; }
     }
 }

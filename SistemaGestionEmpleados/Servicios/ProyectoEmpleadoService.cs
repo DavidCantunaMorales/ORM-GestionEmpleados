@@ -17,10 +17,11 @@ namespace SistemaGestionEmpleados.Servicios
             return await _context.ProyectosEmpleados.ToListAsync();
         }
 
-        public async Task<ProyectoEmpleado> GetProyectoEmpleado(int id)
+        public async Task<ProyectoEmpleado> GetProyectoEmpleado(int idProyectoEmp)
         {
-            return await _context.ProyectosEmpleados.FindAsync(id);
+            return await _context.ProyectosEmpleados.FindAsync(idProyectoEmp);
         }
+
 
         public async Task<ProyectoEmpleado> CreateProyecto(ProyectoEmpleado newProyectoEmpleado)
         {

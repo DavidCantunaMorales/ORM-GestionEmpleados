@@ -21,25 +21,6 @@ namespace BDOO.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("BDOO.Cargo", b =>
-                {
-                    b.Property<int>("IdCargo")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdCargo"));
-
-                    b.Property<string>("DescripcionCargo")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NombreCargo")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("IdCargo");
-
-                    b.ToTable("Cargo", (string)null);
-                });
-
             modelBuilder.Entity("BDOO.Departamento", b =>
                 {
                     b.Property<int>("IdDep")
@@ -67,17 +48,14 @@ namespace BDOO.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdEmp"));
 
-                    b.Property<string>("ApellidoEmp")
+                    b.Property<string>("Apellido")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("CorreoEmp")
+                    b.Property<string>("Correo")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("DireccionEmp")
+                    b.Property<string>("Direccion")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("IdCargo")
-                        .HasColumnType("int");
 
                     b.Property<int>("IdDep")
                         .HasColumnType("int");
@@ -85,15 +63,13 @@ namespace BDOO.Migrations
                     b.Property<int>("IdHorario")
                         .HasColumnType("int");
 
-                    b.Property<string>("NombreEmp")
+                    b.Property<string>("Nombre")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("TelefonoEmp")
+                    b.Property<string>("Telefono")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("IdEmp");
-
-                    b.HasIndex("IdCargo");
 
                     b.HasIndex("IdDep");
 
@@ -148,33 +124,72 @@ namespace BDOO.Migrations
 
             modelBuilder.Entity("BDOO.ProyectoEmpleado", b =>
                 {
-                    b.Property<int>("IdEmpleado")
-                        .HasColumnType("int");
-
-                    b.Property<int>("IdProyecto")
-                        .HasColumnType("int");
-
                     b.Property<int>("IdProyectoEmp")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdProyectoEmp"));
 
-                    b.HasKey("IdEmpleado", "IdProyecto");
+                    b.Property<int>("IdEmpleado")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IdProyecto")
+                        .HasColumnType("int");
+
+                    b.HasKey("IdProyectoEmp");
+
+                    b.HasIndex("IdEmpleado");
 
                     b.HasIndex("IdProyecto");
 
                     b.ToTable("ProyectoEmpleado", (string)null);
                 });
 
+            modelBuilder.Entity("BDOO.Supervisor", b =>
+                {
+                    b.Property<int>("IdSup")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdSup"));
+
+                    b.Property<string>("Apellido")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Correo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Direccion")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("IdDep")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IdHorario")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IdProyecto")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Nombre")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Telefono")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("IdSup");
+
+                    b.HasIndex("IdDep");
+
+                    b.HasIndex("IdHorario");
+
+                    b.HasIndex("IdProyecto");
+
+                    b.ToTable("Supervisor", (string)null);
+                });
+
             modelBuilder.Entity("BDOO.Empleado", b =>
                 {
-                    b.HasOne("BDOO.Cargo", "Cargo")
-                        .WithMany()
-                        .HasForeignKey("IdCargo")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("BDOO.Departamento", "Departamento")
                         .WithMany()
                         .HasForeignKey("IdDep")
@@ -186,8 +201,6 @@ namespace BDOO.Migrations
                         .HasForeignKey("IdHorario")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Cargo");
 
                     b.Navigation("Departamento");
 
@@ -209,6 +222,33 @@ namespace BDOO.Migrations
                         .IsRequired();
 
                     b.Navigation("Empleado");
+
+                    b.Navigation("Proyecto");
+                });
+
+            modelBuilder.Entity("BDOO.Supervisor", b =>
+                {
+                    b.HasOne("BDOO.Departamento", "Departamento")
+                        .WithMany()
+                        .HasForeignKey("IdDep")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BDOO.Horario", "Horario")
+                        .WithMany()
+                        .HasForeignKey("IdHorario")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BDOO.Proyecto", "Proyecto")
+                        .WithMany()
+                        .HasForeignKey("IdProyecto")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Departamento");
+
+                    b.Navigation("Horario");
 
                     b.Navigation("Proyecto");
                 });

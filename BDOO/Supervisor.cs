@@ -9,17 +9,21 @@ using System.Text.Json.Serialization;
 
 namespace BDOO
 {
-    public class Empleado: Persona
+    public class Supervisor : Persona
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int IdEmp { get; set; }
+        public int IdSup { get; set; }
 
         // ATRIBUTOS PARA LOS ID DE CLASE FORANEAS
         public int IdDep { get; set; }
         public int IdHorario { get; set; }
+        public int IdProyecto { get; set; }
 
         // IMPLEMENTACION DE CLAVES FORANEAS
+        [ForeignKey("IdProyecto")]
+        [JsonIgnore]
+        public virtual Proyecto? Proyecto { get; set; }
 
         [ForeignKey("IdDep")]
         [JsonIgnore]
@@ -29,8 +33,5 @@ namespace BDOO
         [JsonIgnore]
         public virtual Horario? Horario { get; set; }
 
-        // RELACION DE MUCHOS A MUCHOS
-        [JsonIgnore]
-        public virtual ICollection<ProyectoEmpleado>? ProyectoEmpleados { get; set; }
     }
 }

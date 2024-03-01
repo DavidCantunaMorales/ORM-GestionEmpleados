@@ -35,12 +35,11 @@ namespace SistemaGestionEmpleados.Servicios
 
             if (existEmpleado != null)
             {
-                existEmpleado.NombreEmp = empleado.NombreEmp;
-                existEmpleado.ApellidoEmp = empleado.ApellidoEmp;
-                existEmpleado.DireccionEmp = empleado.DireccionEmp;
-                existEmpleado.TelefonoEmp = empleado.TelefonoEmp;
-                existEmpleado.CorreoEmp = empleado.CorreoEmp;
-                existEmpleado.IdCargo = empleado.IdCargo;
+                existEmpleado.Nombre = empleado.Nombre;
+                existEmpleado.Apellido = empleado.Apellido;
+                existEmpleado.Direccion = empleado.Direccion;
+                existEmpleado.Telefono = empleado.Telefono;
+                existEmpleado.Correo = empleado.Correo;             
                 existEmpleado.IdDep = empleado.IdDep;
                 existEmpleado.IdHorario = empleado.IdHorario;
                 await _context.SaveChangesAsync();
