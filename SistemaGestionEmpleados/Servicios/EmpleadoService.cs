@@ -57,6 +57,5 @@ namespace SistemaGestionEmpleados.Servicios
                 await _context.SaveChangesAsync();
             }
         }
-
     }
 }

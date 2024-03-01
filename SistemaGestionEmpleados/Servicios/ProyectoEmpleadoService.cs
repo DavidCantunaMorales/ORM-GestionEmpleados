@@ -12,42 +12,42 @@ namespace SistemaGestionEmpleados.Servicios
             _context = context;
         }
 
-        public async Task<IEnumerable<ProyectoEmpleado>> GetProyectos()
+        public async Task<IEnumerable<ProyectoEmpleado>> GetProyectoEmpleados()
         {
-            return await _context.Proyectos.ToListAsync();
+            return await _context.ProyectosEmpleados.ToListAsync();
         }
 
-        public async Task<ProyectoEmpleado> GetProyecto(int id)
+        public async Task<ProyectoEmpleado> GetProyectoEmpleado(int id)
         {
-            return await _context.Proyectos.FindAsync(id);
+            return await _context.ProyectosEmpleados.FindAsync(id);
         }
 
-        public async Task<ProyectoEmpleado> CreateProyecto(Proyecto newProyecto)
+        public async Task<ProyectoEmpleado> CreateProyecto(ProyectoEmpleado newProyectoEmpleado)
         {
-            _context.Proyectos.Add(newProyecto);
+            _context.ProyectosEmpleados.Add(newProyectoEmpleado);
             await _context.SaveChangesAsync();
-            return newProyecto;
+            return newProyectoEmpleado;
         }
 
-        public async Task UpdateProyecto(int id, Proyecto c)
+        public async Task UpdateProyectoEmpleado(int id, ProyectoEmpleado proyectoempleado)
         {
-            var existProyecto = await GetProyecto(id);
+            var existProyectoEmpleado = await GetProyectoEmpleado(id);
 
-            if (existProyecto != null)
+            if (existProyectoEmpleado != null)
             {
-                existProyecto.NombreProyecto = existProyecto.NombreProyecto;
-                existProyecto.DescripcionProyecto = existProyecto.DescripcionProyecto;
+                existProyectoEmpleado.IdEmpleado = proyectoempleado.IdEmpleado;
+                existProyectoEmpleado.IdProyecto = proyectoempleado.IdProyecto;
                 await _context.SaveChangesAsync();
             }
         }
 
-        public async Task DeleteProyecto(int id)
+        public async Task DeleteProyectoEmpleado(int id)
         {
-            var proyectoDelete = await GetProyecto(id);
+            var proyectoEmpleadoDelete = await GetProyectoEmpleado(id);
 
-            if (proyectoDelete != null)
+            if (proyectoEmpleadoDelete != null)
             {
-                _context.Proyectos.Remove(proyectoDelete);
+                _context.ProyectosEmpleados.Remove(proyectoEmpleadoDelete);
                 await _context.SaveChangesAsync();
             }
         }

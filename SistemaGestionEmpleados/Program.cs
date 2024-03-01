@@ -19,8 +19,10 @@ builder.Services.AddDbContext<BDContext>(options => {
 // INYECCION DE DEPENDENCIAS DE LOS SERVICIOS
 builder.Services.AddScoped<CargoService>();
 builder.Services.AddScoped<DepartamentoService>();
+builder.Services.AddScoped<HorarioService>();
 builder.Services.AddScoped<ProyectoService>();
 builder.Services.AddScoped<EmpleadoService>();
+builder.Services.AddScoped<ProyectoEmpleadoService>();
 
 var app = builder.Build();
 

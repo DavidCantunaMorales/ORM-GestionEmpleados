@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using SistemaGestionEmpleados.Servicios;
 
 namespace SistemaGestionEmpleados.Controllers
 {
@@ -9,25 +10,24 @@ namespace SistemaGestionEmpleados.Controllers
     [ApiController]
     public class HorarioController : ControllerBase
     {
-        private BDContext _context;
-
-        public HorarioController(BDContext context)
+        private readonly HorarioService _horarioService;
+        public HorarioController(HorarioService horarioService)
         {
-            _context = context;
+            _horarioService = horarioService;
         }
 
         // OBTENER TODOS LOS  HORARIOS
         [HttpGet]
         public async Task<IEnumerable<Horario>> GetAll()
         {
-            return await _context.Horarios.ToListAsync();
+            return await _horarioService.GetHorarios();
         }
 
         // OBTENER UN HORARIO
         [HttpGet("getHorario/{id}")]
         public async Task<ActionResult<Horario>> GetById(int id)
         {
-            var horario = await _context.Horarios.FindAsync(id);
+            var horario = await _horarioService.GetHorario(id);
             if (horario is null)
             {
                 return AccountNotFound(id);
@@ -37,16 +37,15 @@ namespace SistemaGestionEmpleados.Controllers
 
         // CREAR UN NUEVO HORARIO
         [HttpPost("addHorario")]
-        public async Task<ActionResult<Horario>> Create(Horario horario)
+        public async Task<IActionResult> Create(Horario horario)
         {
-            _context.Horarios.Add(horario);
-            var newHorario = await _context.SaveChangesAsync();
+            var newHorario = await _horarioService.CreateHorario(horario);
             return CreatedAtAction(nameof(GetById), new { id = horario.IdHorario }, horario);
         }
 
         // ACTUALIZAR UN HORARIO
         [HttpPut("updateHorario/{id}")]
-        public async Task<ActionResult> Update(int id, Horario horario)
+        public async Task<IActionResult> Update(int id, Horario horario)
         {
             // VERIFICAR EL ID DE LA URL CON EL ID DEL JSON
             if (id != horario.IdHorario)
@@ -55,14 +54,12 @@ namespace SistemaGestionEmpleados.Controllers
             }
 
             // ENCONTRANDO EL CARGO A ACTUALIZAR
-            var horarioUpdate = await _context.Horarios.FindAsync(id);
+            var horarioUpdate = await _horarioService.GetHorario(id);
 
             // VERIFICAR SI SE ENCUENTRA EL CARGO
             if (horarioUpdate is not null)
             {
-                horarioUpdate.HoraEntrada = horario.HoraEntrada;
-                horarioUpdate.HoraSalida = horario.HoraSalida;
-                await _context.SaveChangesAsync();
+                await _horarioService.UpdateHorario(id, horario);
                 return Ok();
             }
             else
@@ -75,12 +72,11 @@ namespace SistemaGestionEmpleados.Controllers
         [HttpDelete("deleteHorario/{id}")]
         public async Task<ActionResult> Delete(int id)
         {
-            var horarioDelete = await _context.Horarios.FindAsync(id);
+            var horarioDelete = await _horarioService.GetHorario(id);
 
             if (horarioDelete is not null)
             {
-                _context.Horarios.Remove(horarioDelete);
-                await _context.SaveChangesAsync();
+                await _horarioService.DeleteEmpleado(id);
                 return Ok();
             }
             else
