@@ -35,7 +35,7 @@ namespace SistemaGestionEmpleados.Controllers
         }
 
         // CREAR UN NUEVO EMPLEADO
-        [HttpPost("addCargo")]
+        [HttpPost("addEmpleado")]
         public async Task<IActionResult> Create(Empleado empleado)
         {
             var newEmpleado = await _empleadoService.CreateEmpleado(empleado);

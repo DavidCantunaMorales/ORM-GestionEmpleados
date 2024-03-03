@@ -16,6 +16,7 @@ namespace BDOO
         public int IdProyectoEmp {  get; set; }
 
         // CLASE QUE PARTE LA RELACION DE MUCHOS A MUCHOS
+        [Required(ErrorMessage = "El emplaedo no puede repetirse.")]
         public int IdEmpleado { get; set; }
         [JsonIgnore]
         public virtual Empleado? Empleado { get; set; }

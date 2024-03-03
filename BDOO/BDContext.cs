@@ -35,6 +35,73 @@ namespace BDOO
                 .HasOne(ec => ec.Proyecto)
                 .WithMany(c => c.ProyectoEmpleados)
                 .HasForeignKey(ec => ec.IdProyecto);
+
+            // VALIDACION DEPARTAMENTO
+            modelBuilder.Entity<Departamento>()
+                .HasIndex(d => d.NombreDep)
+                .IsUnique();
+
+            // VALIDACION DEL EMPLEADO
+            modelBuilder.Entity<Empleado>()
+                .HasIndex(d => d.Telefono)
+                .IsUnique();
+            modelBuilder.Entity<Empleado>()
+                .HasIndex(d => d.Correo)
+                .IsUnique();
+
+            // VALIDACION DEL SUPERVISOR
+            modelBuilder.Entity<Supervisor>()
+                .HasIndex(d => d.IdProyecto)
+                .IsUnique();
+            modelBuilder.Entity<Supervisor>()
+                .HasIndex(d => d.Telefono)
+                .IsUnique();
+            modelBuilder.Entity<Supervisor>()
+                .HasIndex(d => d.Correo)
+                .IsUnique();
+
+            // VALIDACIONES DEL PROYECTO
+            modelBuilder.Entity<Proyecto>()
+                .HasIndex(d => d.NombreProyecto)
+                .IsUnique();
+
+            // VALIDACION DEL PROYECTO EMPLEADO
+            modelBuilder.Entity<ProyectoEmpleado>()
+                .HasIndex(pe => new { pe.IdEmpleado, pe.IdProyecto })
+                .IsUnique();
+
+            // ELIMINACION EN CASCADA DEPARTAMENTO
+            modelBuilder.Entity<Departamento>()
+                .HasMany(d => d.Empleados)
+                .WithOne(e => e.Departamento)
+                .HasForeignKey(e => e.IdDep)
+                .OnDelete(DeleteBehavior.Restrict); // Restringe la eliminación en cascada
+
+            modelBuilder.Entity<Departamento>()
+                .HasMany(d => d.Supervisores)
+                .WithOne(e => e.Departamento)
+                .HasForeignKey(e => e.IdDep)
+                .OnDelete(DeleteBehavior.Restrict); // Restringe la eliminación en cascada
+
+            // ELIMINACION EN CASCADA HORARIO
+            modelBuilder.Entity<Horario>()
+                .HasMany(d => d.Empleados)
+                .WithOne(e => e.Horario)
+                .HasForeignKey(e => e.IdHorario)
+                .OnDelete(DeleteBehavior.Restrict); // Restringe la eliminación en cascada
+
+            modelBuilder.Entity<Horario>()
+                .HasMany(d => d.Supervisores)
+                .WithOne(e => e.Horario)
+                .HasForeignKey(e => e.IdHorario)
+                .OnDelete(DeleteBehavior.Restrict); // Restringe la eliminación en cascada
+
+            // ELIMINACION EN CASCADA PROYECTO
+            modelBuilder.Entity<Proyecto>()
+                .HasMany(d => d.Supervisores)
+                .WithOne(e => e.Proyecto)
+                .HasForeignKey(e => e.IdProyecto)
+                .OnDelete(DeleteBehavior.Restrict); // Restringe la eliminación en cascada
         }
     }
 }

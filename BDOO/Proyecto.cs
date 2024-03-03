@@ -14,6 +14,7 @@ namespace BDOO
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int IdProyecto { get; set; }
+        [Required(ErrorMessage = "El nombre del proyecto no puede repetirse.")]
         public string? NombreProyecto { get; set; }
         public string? DescripcionProyecto { get; set; }
         public string? FechaInicio { get; set; }
@@ -22,5 +23,8 @@ namespace BDOO
         // RELACION DE MUCHOS A MUCHOS
         [JsonIgnore]
         public virtual ICollection<ProyectoEmpleado>? ProyectoEmpleados { get; set; }
+        [JsonIgnore]
+        public virtual ICollection<Supervisor> Supervisores { get; set; } = new List<Supervisor>();
+
     }
 }

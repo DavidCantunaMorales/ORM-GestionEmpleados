@@ -3,6 +3,7 @@ using BDOO;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BDOO.Migrations
 {
     [DbContext(typeof(BDContext))]
-    partial class BDContextModelSnapshot : ModelSnapshot
+    [Migration("20240302183708_eliminacionHorario")]
+    partial class eliminacionHorario
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -273,9 +276,9 @@ namespace BDOO.Migrations
                         .IsRequired();
 
                     b.HasOne("BDOO.Proyecto", "Proyecto")
-                        .WithMany("Supervisores")
+                        .WithMany()
                         .HasForeignKey("IdProyecto")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Departamento");
@@ -307,8 +310,6 @@ namespace BDOO.Migrations
             modelBuilder.Entity("BDOO.Proyecto", b =>
                 {
                     b.Navigation("ProyectoEmpleados");
-
-                    b.Navigation("Supervisores");
                 });
 #pragma warning restore 612, 618
         }

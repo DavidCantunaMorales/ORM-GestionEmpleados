@@ -18,6 +18,8 @@ namespace BDOO
         // ATRIBUTOS PARA LOS ID DE CLASE FORANEAS
         public int IdDep { get; set; }
         public int IdHorario { get; set; }
+
+        [Required(ErrorMessage = "El proyecto no puede repetirse.")]
         public int IdProyecto { get; set; }
 
         // IMPLEMENTACION DE CLAVES FORANEAS

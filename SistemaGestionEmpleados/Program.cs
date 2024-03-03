@@ -23,6 +23,7 @@ builder.Services.AddScoped<HorarioService>();
 builder.Services.AddScoped<ProyectoService>();
 builder.Services.AddScoped<EmpleadoService>();
 builder.Services.AddScoped<ProyectoEmpleadoService>();
+builder.Services.AddScoped<SupervisorService>();
 
 var app = builder.Build();
 
